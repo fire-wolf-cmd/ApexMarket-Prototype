@@ -1,0 +1,89 @@
+<%- include('header') %>
+
+<div class="container mt-40">
+    <div style="margin-bottom:40px;">
+        <h1 style="font-size:2.5rem; color:var(--ruby-pink);"><%= category.replace(/_/g, ' & ').toUpperCase() %></h1>
+        <p style="color:var(--light-text);">Showing all products in <%= category.replace(/_/g, ' & ') %></p>
+    </div>
+
+    <div style="display:flex; gap:30px;">
+        <!-- Filters Sidebar -->
+        <aside style="flex:0 0 250px;">
+            <div style="background:white; padding:25px; border-radius:15px; box-shadow:var(--shadow);">
+                <h3 style="margin-bottom:20px; font-size:1.1rem;">Filters</h3>
+                
+                <div style="margin-bottom:25px;">
+                    <h4 style="font-size:0.9rem; margin-bottom:10px;">Price Range</h4>
+                    <input type="range" style="width:100%; accent-color:var(--ruby-pink);">
+                    <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-top:5px;">
+                        <span>₹0</span>
+                        <span>₹1,50,000+</span>
+                    </div>
+                </div>
+
+                <% if (category === 'fashion') { %>
+                <div style="margin-bottom:25px;">
+                    <h4 style="font-size:0.9rem; margin-bottom:10px;">Size</h4>
+                    <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                        <button class="size-btn" style="padding:5px 10px; border:1px solid var(--accent-pink); border-radius:5px; background:white;">XS</button>
+                        <button class="size-btn" style="padding:5px 10px; border:1px solid var(--accent-pink); border-radius:5px; background:white;">S</button>
+                        <button class="size-btn" style="padding:5px 10px; border:1px solid var(--ruby-pink); background:var(--ruby-pink); color:white; border-radius:5px;">M</button>
+                        <button class="size-btn" style="padding:5px 10px; border:1px solid var(--accent-pink); border-radius:5px; background:white;">L</button>
+                        <button class="size-btn" style="padding:5px 10px; border:1px solid var(--accent-pink); border-radius:5px; background:white;">XL</button>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </aside>
+
+        <!-- Product Listing -->
+        <div style="flex:1;">
+            <% if (category === 'electronics') { %>
+                <div style="display:flex; flex-direction:column; gap:20px;">
+                    <% products.forEach(p => { %>
+                    <div style="background:white; border-radius:15px; padding:20px; display:flex; gap:30px; box-shadow:var(--shadow); position:relative;">
+                        <div style="background:var(--soft-pink); width:80px; height:20px; position:absolute; top:15px; right:15px; border-radius:4px; font-size:0.6rem; font-weight:700; display:flex; align-items:center; justify-content:center; border:1px solid var(--ruby-pink); color:var(--ruby-pink);">SPONSORED</div>
+                        <div style="flex:0 0 200px; display:flex; align-items:center; justify-content:center;">
+                            <img src="/static/img/products/<%= category %>/<%= p.img %>" style="width:100%; height:150px; object-fit:contain;">
+                        </div>
+                        <div style="flex:1;">
+                            <h3 style="font-size:1.4rem; margin-bottom:10px;"><%= p.name %></h3>
+                            <p style="color:var(--light-text); font-size:0.9rem; margin-bottom:15px;"><%= p.specs %></p>
+                            <div style="display:flex; align-items:center; gap:15px; margin-bottom:20px;">
+                                <span style="font-size:1.6rem; color:var(--ruby-pink); font-weight:700;">₹<%= p.price %></span>
+                                <span style="color:var(--light-text); text-decoration:line-through;">₹<%= p.old_price %></span>
+                                <span style="color:#28a745; font-weight:600; font-size:0.9rem;">(25% OFF)</span>
+                            </div>
+                            <div style="display:flex; gap:15px;">
+                                <a href="/product/<%= p.id %>" class="btn" style="border:1px solid var(--ruby-pink); color:var(--ruby-pink);">View Details</a>
+                                <button class="btn btn-primary" onclick="addToCart(this, '<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.img %>', '<%= category %>')">Add to Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+            <% } else { %>
+                <div class="grid-12">
+                    <% products.forEach(p => { %>
+                    <div class="product-card" style="grid-column: span 4;">
+                        <i class="far fa-heart wishlist-heart"></i>
+                        <a href="/product/<%= p.id %>">
+                            <div style="height:300px; display:flex; align-items:center; justify-content:center; margin-bottom:15px;">
+                                <img src="/static/img/products/<%= category %>/<%= p.img %>" style="width:100%; height:100%; object-fit:contain;">
+                            </div>
+                            <h3 class="product-name" style="font-size:1.1rem;"><%= p.name %></h3>
+                        </a>
+                        <div class="product-price" style="margin-bottom:15px;">
+                            <span class="current-price">₹<%= p.price %></span>
+                            <span class="old-price">₹<%= p.old_price %></span>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;" onclick="addToCart(this, '<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.img %>', '<%= category %>')">Add to Cart</button>
+                    </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('footer') %>

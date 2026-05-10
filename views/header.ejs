@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApexMarket | Your Premium Shopping Destination</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <script>
+        if (!window.location.pathname.includes('/login') && localStorage.getItem('apex_auth') !== 'true') {
+            window.location.href = '/login';
+        }
+    </script>
+</head>
+<body>
+    <!-- Mobile Drawer Overlay -->
+    <div id="drawer-overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1500;"></div>
+    
+    <!-- Mobile Navigation Drawer -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <div class="logo" style="font-size:1.4rem;">ApexMarket</div>
+            <i class="fas fa-times" id="close-nav" style="font-size:1.5rem; cursor:pointer;"></i>
+        </div>
+        <ul style="display:flex; flex-direction:column; gap:20px; font-weight:600;">
+            <li><a href="/">Home</a></li>
+            <li><a href="/category/electronics">Electronics</a></li>
+            <li><a href="/category/fashion">Fashion</a></li>
+            <li><a href="/category/home_kitchen">Home & Kitchen</a></li>
+            <li><a href="/category/skincare_beauty">Skincare & Beauty</a></li>
+        </ul>
+        <div style="margin-top:auto; padding-top:40px;">
+            <button class="btn btn-primary" style="width:100%;" onclick="openLogin()">Sign In</button>
+        </div>
+    </nav>
+
+    <!-- Deal of the Day Bar -->
+    <div class="deal-bar">
+        ⚡ FLASH SALE: <span id="deal-text">Electronics up to 60% OFF</span> | Ends in: <span id="countdown">00:00:00</span>
+    </div>
+
+    <!-- Global Header -->
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <div style="display:flex; align-items:center; gap:15px;">
+                    <i class="fas fa-bars" id="open-nav" style="font-size:1.2rem; cursor:pointer;"></i>
+                    <a href="/" class="logo">
+                        <i class="fas fa-gem"></i> ApexMarket
+                    </a>
+                </div>
+                
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="Search for drone, laptop, chic dress...">
+                    <div id="search-results" style="position:absolute; top:100%; left:0; width:100%; background:white; box-shadow:0 10px 30px rgba(0,0,0,0.1); border-radius:0 0 12px 12px; z-index:100; display:none;">
+                        <!-- Results will be injected here -->
+                    </div>
+                </div>
+
+                <div class="header-icons">
+                    <div style="display:flex; flex-direction:column; align-items:center; cursor:pointer;" onclick="openLogin()">
+                        <i class="far fa-user"></i>
+                        <span style="font-size:0.7rem; font-weight:600;">Account</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:center; cursor:pointer;" onclick="topUpWallet()">
+                        <i class="fas fa-wallet" style="color:var(--ruby-pink);"></i>
+                        <span style="font-size:0.7rem; font-weight:600;">Top Up</span>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:center; cursor:pointer;" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span style="font-size:0.7rem; font-weight:600;">Logout</span>
+                    </div>
+                    <a href="/cart" style="display:flex; flex-direction:column; align-items:center; position:relative;">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" style="position:absolute; top:-8px; right:-8px; background:var(--ruby-pink); color:white; font-size:0.6rem; padding:2px 6px; border-radius:10px;">0</span>
+                        <span style="font-size:0.7rem; font-weight:600;">Cart</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>

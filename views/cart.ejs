@@ -1,0 +1,51 @@
+<%- include('header') %>
+
+<div class="container mt-40">
+    <h1 style="font-size:2.5rem; margin-bottom:40px; color:var(--ruby-pink);">Shopping Bag</h1>
+    <div style="display:flex; gap:40px;">
+        <div style="flex:1;" id="cart-items-container"></div>
+        <div style="flex:0 0 350px;">
+            <div style="background:white; padding:30px; border-radius:20px; box-shadow:var(--shadow);">
+                <h3>Order Summary</h3>
+                <div style="margin:20px 0; border-bottom:1px solid #eee; padding-bottom:20px;">
+                    <div style="display:flex; justify-content:space-between;"><span>Bag Total</span><span id="bag-total">₹0</span></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:800; font-size:1.2rem; margin-bottom:30px;">
+                    <span>Total</span><span id="total-amount">₹0</span>
+                </div>
+                <a href="/checkout" class="btn btn-primary" style="width:100%; text-align:center;">PLACE ORDER</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const container = document.getElementById('cart-items-container');
+    let total = 0;
+
+    if (cart.length === 0) {
+        container.innerHTML = '<h2>Your bag is empty</h2>';
+        return;
+    }
+
+    container.innerHTML = cart.map((item, index) => {
+        total += item.price;
+        const catPath = item.category.toLowerCase().replace(/ & /g, '_').replace(/ /g, '_');
+        return `
+            <div style="background:white; padding:20px; border-radius:15px; box-shadow:var(--shadow); margin-bottom:20px; display:flex; gap:20px;">
+                <img src="/static/img/products/${catPath}/${item.img}" style="width:100px; height:100px; object-fit:contain;">
+                <div style="flex:1;">
+                    <h4>${item.name}</h4>
+                    <p>₹${item.price}</p>
+                </div>
+            </div>
+        `;
+    }).join('');
+    document.getElementById('bag-total').innerText = '₹' + total;
+    document.getElementById('total-amount').innerText = '₹' + total;
+});
+</script>
+
+<%- include('footer') %>

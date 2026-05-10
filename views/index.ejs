@@ -1,0 +1,96 @@
+<%- include('header') %>
+
+<div class="container">
+    <!-- Hero Carousel -->
+    <section class="hero mt-40" style="position:relative; height:450px; border-radius:20px; overflow:hidden; box-shadow:0 10px 30px rgba(255,105,180,0.15);">
+        <div id="carousel" style="display:flex; transition:transform 0.5s ease-in-out; height:100%;">
+            <div class="slide" style="min-width:100%; background:linear-gradient(135deg, #FFD1DC 0%, #FFF5F7 100%); display:flex; align-items:center; padding:0 80px;">
+                <div style="flex:1;">
+                    <h1 style="font-size:3.5rem; color:var(--ruby-pink); margin-bottom:20px;">Summer Sparkle Collection</h1>
+                    <p style="font-size:1.2rem; color:var(--light-text); margin-bottom:30px;">Up to 50% off on all Fashion & Skincare</p>
+                    <a href="/category/fashion" class="btn btn-primary">Shop Now</a>
+                </div>
+                <div style="flex:1; display:flex; justify-content:center;">
+                    <img src="/static/img/products/fashion/chic dress W.png" style="height:350px; filter:drop-shadow(0 20px 30px rgba(0,0,0,0.1));">
+                </div>
+            </div>
+        </div>
+        
+        <div style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:10px;">
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--ruby-pink);"></div>
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--accent-pink);"></div>
+            <div style="width:12px; height:12px; border-radius:50%; background:var(--accent-pink);"></div>
+        </div>
+    </section>
+
+    <!-- Categories Grid -->
+    <section class="mt-40">
+        <h2 style="text-align:center; margin-bottom:40px; font-size:2rem;">Shop by Category</h2>
+        <div class="grid-12">
+            <a href="/category/electronics" style="grid-column: span 3; background:white; padding:30px; border-radius:15px; text-align:center; box-shadow:var(--shadow); transition:transform 0.3s;">
+                <div style="font-size:3rem; color:var(--ruby-pink); margin-bottom:15px;"><i class="fas fa-laptop"></i></div>
+                <h3 style="font-size:1.1rem;">Electronics</h3>
+                <p style="font-size:0.8rem; color:var(--light-text);">Laptops, Phones & More</p>
+            </a>
+            <a href="/category/fashion" style="grid-column: span 3; background:white; padding:30px; border-radius:15px; text-align:center; box-shadow:var(--shadow); transition:transform 0.3s;">
+                <div style="font-size:3rem; color:var(--ruby-pink); margin-bottom:15px;"><i class="fas fa-tshirt"></i></div>
+                <h3 style="font-size:1.1rem;">Fashion</h3>
+                <p style="font-size:0.8rem; color:var(--light-text);">Chic Styles for All</p>
+            </a>
+            <a href="/category/home-kitchen" style="grid-column: span 3; background:white; padding:30px; border-radius:15px; text-align:center; box-shadow:var(--shadow); transition:transform 0.3s;">
+                <div style="font-size:3rem; color:var(--ruby-pink); margin-bottom:15px;"><i class="fas fa-home"></i></div>
+                <h3 style="font-size:1.1rem;">Home & Kitchen</h3>
+                <p style="font-size:0.8rem; color:var(--light-text);">Modern Essentials</p>
+            </a>
+            <a href="/category/skincare-beauty" style="grid-column: span 3; background:white; padding:30px; border-radius:15px; text-align:center; box-shadow:var(--shadow); transition:transform 0.3s;">
+                <div style="font-size:3rem; color:var(--ruby-pink); margin-bottom:15px;"><i class="fas fa-magic"></i></div>
+                <h3 style="font-size:1.1rem;">Skincare & Beauty</h3>
+                <p style="font-size:0.8rem; color:var(--light-text);">Glow Naturally</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="mt-40 mb-40">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+            <h2 style="font-size:2rem;">Trending Now</h2>
+            <a href="/category/fashion" style="color:var(--ruby-pink); font-weight:600;">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="grid-12">
+            <% featured.forEach(p => { %>
+            <div class="product-card" style="grid-column: span 3;">
+                <i class="far fa-heart wishlist-heart"></i>
+                <a href="/product/<%= p.id %>">
+                    <img src="/static/img/products/<%= p.category.toLowerCase().replace(' & ', '_').replace(' ', '_') %>/<%= p.img %>" class="product-img">
+                    <h3 class="product-name"><%= p.name %></h3>
+                </a>
+                <div class="product-price">
+                    <span class="current-price">₹<%= p.price %></span>
+                    <span class="old-price">₹<%= p.old_price %></span>
+                </div>
+                <button class="btn btn-primary" style="width:100%; margin-top:15px; padding:8px 15px; font-size:0.9rem;" onclick="addToCart(this, '<%= p.id %>', '<%= p.name %>', <%= p.price %>, '<%= p.img %>', '<%= p.category %>')">Add to Cart</button>
+            </div>
+            <% }) %>
+        </div>
+    </section>
+    
+    <!-- Rewards Section -->
+    <section style="background:var(--white); padding:40px; border-radius:20px; box-shadow:var(--shadow); margin-bottom:60px;">
+        <div style="display:flex; align-items:center; gap:40px;">
+            <div style="flex:1;">
+                <h2 style="color:var(--ruby-pink); margin-bottom:15px;">Apex Rewards</h2>
+                <p style="color:var(--light-text); margin-bottom:20px;">Shop more to earn points and unlock exclusive pink tier discounts!</p>
+                <div style="background:#eee; height:12px; border-radius:6px; position:relative; overflow:hidden;">
+                    <div style="background:var(--ruby-pink); width:65%; height:100%; border-radius:6px;"></div>
+                </div>
+                <p style="font-size:0.8rem; margin-top:10px; font-weight:600;">650 / 1000 pts to Pink Diamond Member</p>
+            </div>
+            <div style="flex:0 0 150px; text-align:center; border-left:1px solid #eee; padding-left:40px;">
+                <div style="font-size:2.5rem; color:var(--ruby-pink); font-weight:900;">₹2,400</div>
+                <p style="font-size:0.8rem; font-weight:600;">Savings this month</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<%- include('footer') %>
